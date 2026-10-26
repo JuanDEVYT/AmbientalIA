@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.AmbientalIA" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/verde_fondo</item>
+        <item name="android:navigationBarColor">@color/verde_fondo</item>
+        <item name="android:windowBackground">@color/verde_fondo</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

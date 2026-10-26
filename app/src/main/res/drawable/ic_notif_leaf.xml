@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Icono de notificación: hoja blanca (máscara de nivel gris) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#FFFFFF">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,3 C17,5 19.5,10 18,16 C14,19.5 8,18.5 6,14.5 C4.5,10 7,5 12,3 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M11,8 C12.5,11 13,14 12.5,17.5 L11,17.5 C11,14 10.5,11 9.5,9 Z" />
+</vector>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="verde_principal">#58CC02</color>
+    <color name="verde_oscuro">#43A302</color>
+    <color name="verde_fondo">#F0FBEB</color>
+    <color name="verde_hoja">#D7F5D0</color>
+    <color name="verde_bosque">#175B1A</color>
+    <color name="ic_launcher_background">#58CC02</color>
+</resources>

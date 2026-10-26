@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hoja blanca centrada dentro de la zona segura del ícono adaptativo -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:scaleX="0.62"
+        android:scaleY="0.62"
+        android:translateX="0"
+        android:translateY="0">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M54,22 C76,30 86,52 80,76 C62,90 34,86 26,68 C20,46 34,28 54,22 Z" />
+        <path
+            android:fillColor="#43A302"
+            android:pathData="M50,34 C56,48 58,66 56,84 L50,84 C50,66 48,50 44,40 Z" />
+        <path
+            android:fillColor="#43A302"
+            android:pathData="M54,56 C62,54 70,56 74,60 L72,65 C67,61 60,60 54,61 Z" />
+        <path
+            android:fillColor="#43A302"
+            android:pathData="M52,44 C46,44 40,47 37,51 L41,55 C44,51 48,49 53,49 Z" />
+    </group>
+</vector>

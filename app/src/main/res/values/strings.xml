@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">AmbientalIA</string>
+
+    <!-- Navegación -->
+    <string name="nav_chat">Chat</string>
+    <string name="nav_scan">Escanear</string>
+    <string name="nav_plants">Plantas</string>
+    <string name="nav_settings">Ajustes</string>
+
+    <!-- Eco -->
+    <string name="eco_banner">Modelos servidos en centros de datos con consumo de agua mínimo o nulo</string>
+    <string name="eco_title">Nuestro compromiso ambiental</string>
+    <string name="eco_body">AmbientalIA conversa con modelos de lenguaje servidos en centros de datos refrigerados con agua en circuito cerrado, cuyo consumo se reutiliza y se reporta. Usamos el mínimo necesario: mensajes cortos, historial limitado y solo cuando lo pides. Así la huella hídrica de cada respuesta es mínima o nula.</string>
+
+    <!-- Chat -->
+    <string name="chat_hint">Pregúntame por tus plantas…</string>
+    <string name="chat_send">Enviar</string>
+    <string name="chat_empty">Hola 🌱 Soy AmbientalIA. Escanea una planta o pregúntame lo que quieras sobre el cuidado de tus plantas.</string>
+    <string name="chat_waking">Despertando el servidor…</string>
+    <string name="chat_error">No pude responder. Revisa tu conexión o tu API key.</string>
+    <string name="chat_retry">Reintentar</string>
+
+    <!-- Ajustes -->
+    <string name="settings_key">API key de JuanAI</string>
+    <string name="settings_model">Modelo de texto</string>
+    <string name="settings_vision_model">Modelo con visión (escáner)</string>
+    <string name="settings_reminder">Recordatorio de riego</string>
+    <string name="settings_reminder_time">Hora del recordatorio</string>
+    <string name="settings_test_notification">Probar notificación</string>
+
+    <string name="notif_channel_name">Recordatorios de riego</string>
+    <string name="notif_channel_desc">Aviso diario para regar tus plantas</string>
+    <string name="notif_title">¡Hora de regar las plantas! 🪴</string>
+    <string name="notif_text">Toca para ver qué plantas necesitan agua hoy.</string>
+</resources>
