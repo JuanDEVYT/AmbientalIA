@@ -355,7 +355,9 @@ private fun CamaraPreview(onCapturada: (File?) -> Unit, onCerrar: () -> Unit) {
 
     fun disparar() {
         val archivo = File(context.cacheDir, "planta_${System.currentTimeMillis()}.jpg")
+        val destino = ImageCapture.OutputFileOptions.Builder(archivo).build()
         imageCapture.takePicture(
+            destino,
             ContextCompat.getMainExecutor(context),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) =
