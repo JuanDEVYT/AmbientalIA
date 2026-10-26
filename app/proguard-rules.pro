@@ -30,3 +30,13 @@
 -dontwarn kotlin.**
 -keepclassmembers class **$WhenMappings { <fields>; }
 -keepclassmembers class kotlin.Metadata { public <methods>; }
+
+# --- Anotaciones de solo compilación (llegan con Tink de security-crypto) ---
+# Son anotaciones de validación: no existen en el APK y R8 solo avisa.
+-dontwarn com.google.errorprone.annotations.**
+-dontwarn org.checkerframework.**
+-dontwarn javax.annotation.**
+-dontwarn javax.annotation.concurrent.**
+-dontwarn org.jetbrains.annotations.**
+-dontwarn kotlin.annotations.**
+-dontwarn com.google.common.util.concurrent.**
