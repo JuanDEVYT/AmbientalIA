@@ -358,7 +358,9 @@ private fun CamaraPreview(onCapturada: (File?) -> Unit, onCerrar: () -> Unit) {
         imageCapture.takePicture(
             ContextCompat.getMainExecutor(context),
             object : ImageCapture.OnImageSavedCallback {
-                override fun onImageSaved(output: File) = onCapturada(output)
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) =
+                    onCapturada(archivo)
+
                 override fun onError(exception: ImageCaptureException) = onCapturada(null)
             },
         )

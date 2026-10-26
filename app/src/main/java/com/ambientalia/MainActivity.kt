@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Chat
-import androidx.compose.material.icons.filled.LocalFlower
+import androidx.compose.material.icons.filled.LocalFlorist
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -70,7 +70,7 @@ private data class Destino(val ruta: String, val etiqueta: String, val icono: Im
 private val DESTINOS = listOf(
     Destino("chat", "Chat", Icons.Filled.Chat),
     Destino("escanear", "Escanear", Icons.Filled.CameraAlt),
-    Destino("plantas", "Plantas", Icons.Filled.LocalFlower),
+    Destino("plantas", "Plantas", Icons.Filled.LocalFlorist),
     Destino("ajustes", "Ajustes", Icons.Filled.Settings),
 )
 

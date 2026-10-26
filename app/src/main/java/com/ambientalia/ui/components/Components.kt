@@ -262,8 +262,9 @@ fun DisplayText(text: String, modifier: Modifier = Modifier, color: Color = Verd
     Text(
         text = text,
         modifier = modifier,
-        style = MaterialTheme.typography.displaySmall,
         color = color,
-        shadow = Shadow(color = VerdeOscuro, offset = Offset(0f, 2f), blurRadius = 0f),
+        style = MaterialTheme.typography.displaySmall.copy(
+            shadow = Shadow(color = VerdeOscuro, offset = Offset(0f, 2f), blurRadius = 0f),
+        ),
     )
 }

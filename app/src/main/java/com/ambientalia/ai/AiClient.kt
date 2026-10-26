@@ -6,6 +6,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.delay
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonPrimitive
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
@@ -13,6 +14,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import kotlin.coroutines.resumeWithException
 
 /**
  * Cliente de JuanAI / 9router: API compatible con OpenAI.
@@ -211,10 +213,7 @@ object AiClient {
                 partes,
             ),
         )
-        val sistema = ChatMessage(role = "system", content = json.encodeToJsonElement(
-            kotlinx.serialization.builtins.String.serializer(),
-            Prompt.SYSTEM,
-        ))
+        val sistema = ChatMessage(role = "system", content = JsonPrimitive(Prompt.SYSTEM))
         return chat(listOf(sistema, mensaje), modelo)
     }
 }
