@@ -34,11 +34,17 @@ jobs:
           sdkmanager "platforms;android-35" "build-tools;35.0.0" > /dev/null
 
       # Firma de release: solo si el repo define los secretos.
+      # (el contexto `secrets` no está permitido en `if`, se comprueba en el shell)
       - name: Preparar keystore
-        if: ${{ secrets.KEYSTORE_BASE64 != '' }}
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > "$RUNNER_TEMP/release.jks"
-          echo "ANDROID_KEYSTORE_FILE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            echo "ANDROID_KEYSTORE_FILE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          else
+            echo "Sin secretos de keystore: la release saldrá sin firmar (usa el APK de debug)."
+          fi
 
       - name: Compilar
         env:
