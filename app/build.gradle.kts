@@ -1,3 +1,4 @@
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -35,7 +36,7 @@ android {
         // Misma key para todos los builds:
         //  · en CI llega por variables de entorno (secretos del repo)
         //  · en local se lee keystore/keystore.env (gitignorado)
-        val local = java.util.Properties().apply {
+        val local = Properties().apply {
             val archivo = rootProject.file("keystore/keystore.env")
             if (archivo.exists()) archivo.inputStream().use { load(it) }
         }
