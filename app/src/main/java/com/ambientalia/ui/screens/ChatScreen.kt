@@ -21,6 +21,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -384,16 +387,23 @@ private fun CajaDeTexto(onSend: (String) -> Unit, bloqueado: Boolean) {
             ),
         )
         ChunkyButton(
-            text = "Enviar ➤",
+            text = "",
             onClick = {
                 if (texto.isNotBlank()) {
                     onSend(texto)
                     texto = ""
                 }
             },
-            modifier = Modifier.width(118.dp),
+            modifier = Modifier.size(54.dp),
             enabled = texto.isNotBlank() && !bloqueado,
             shadowHeight = 4.dp,
+            icon = {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.Send,
+                    contentDescription = "Enviar",
+                    tint = if (texto.isNotBlank() && !bloqueado) Color.White else VerdeTextoSuave,
+                )
+            },
         )
     }
 }

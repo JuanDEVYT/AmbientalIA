@@ -15,3 +15,4 @@ val VerdeTextoSuave = Color(0xFF4B7A4E) // texto secundario
 val Ambar = Color(0xFFFFC800) // rachas / logros
 val RojoRiego = Color(0xFFE5484D) // planta sedienta
 val NaranjaAlerta = Color(0xFFFFA500) // atención
+val Agua = Color(0xFF4FB3E8) // gotas de riego y animaciones de agua

@@ -33,7 +33,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocalFlorist
+import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -61,8 +65,11 @@ import com.ambientalia.data.PlantCatalog
 import com.ambientalia.ui.components.ChunkyButton
 import com.ambientalia.ui.components.DuolingoProgress
 import com.ambientalia.ui.components.EntradaDuolingo
+import com.ambientalia.ui.components.EstallidoChispas
 import com.ambientalia.ui.components.LeafCard
 import com.ambientalia.ui.components.PlantArt
+import com.ambientalia.ui.components.RiegoAnimado
+import com.ambientalia.ui.components.rebotarAlRegar
 import com.ambientalia.ui.theme.Ambar
 import com.ambientalia.ui.theme.NaranjaAlerta
 import com.ambientalia.ui.theme.RojoRiego
@@ -110,7 +117,10 @@ fun PlantsScreen() {
 
 @Composable
 private fun Pestanas(seleccion: Int, onSeleccion: (Int) -> Unit) {
-    val etiquetas = listOf("🪴 Mis plantas", "📚 Catálogo")
+    val etiquetas = listOf(
+        "Mis plantas" to Icons.Filled.LocalFlorist,
+        "Catálogo" to Icons.Filled.MenuBook,
+    )
     TabRow(
         selectedTabIndex = seleccion,
         containerColor = VerdeMenta,
@@ -138,7 +148,7 @@ private fun Pestanas(seleccion: Int, onSeleccion: (Int) -> Unit) {
             )
         },
     ) {
-        etiquetas.forEachIndexed { i, texto ->
+        etiquetas.forEachIndexed { i, (texto, icono) ->
             val elegida = seleccion == i
             val escala by animateFloatAsState(
                 targetValue = if (elegida) 1.08f else 1f,
@@ -151,14 +161,27 @@ private fun Pestanas(seleccion: Int, onSeleccion: (Int) -> Unit) {
                 selectedContentColor = VerdeBosque,
                 unselectedContentColor = VerdeTextoSuave,
                 text = {
-                    Text(
-                        text = texto,
-                        fontWeight = FontWeight.ExtraBold,
-                        modifier = Modifier.graphicsLayer {
-                            scaleX = escala
-                            scaleY = escala
-                        },
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = icono,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(18.dp)
+                                .graphicsLayer {
+                                    scaleX = escala
+                                    scaleY = escala
+                                },
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        Text(
+                            text = texto,
+                            fontWeight = FontWeight.ExtraBold,
+                            modifier = Modifier.graphicsLayer {
+                                scaleX = escala
+                                scaleY = escala
+                            },
+                        )
+                    }
                 },
             )
         }
@@ -237,11 +260,14 @@ private fun TarjetaPlanta(planta: PlantaUsuario, onClick: () -> Unit) {
     )
 
     Box {
+        // Lluvia de gotas sobre la tarjeta mientras se riega
+        RiegoAnimado(visible = regando, modifier = Modifier.matchParentSize())
         LeafCard(color = Color.White, onClick = onClick) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     modifier = Modifier
                         .size(66.dp)
+                        .rebotarAlRegar(regando)
                         .clip(RoundedCornerShape(18.dp))
                         .background(VerdeMenta)
                         .border(2.dp, VerdeOscuro, RoundedCornerShape(18.dp)),
@@ -326,15 +352,23 @@ private fun TarjetaPlanta(planta: PlantaUsuario, onClick: () -> Unit) {
                 .padding(top = 8.dp, end = 16.dp),
         ) {
             val shape = RoundedCornerShape(50)
-            Text(
-                text = "💧 +1 nivel",
-                style = MaterialTheme.typography.labelLarge,
-                color = Color.White,
-                modifier = Modifier
-                    .background(VerdePrincipal, shape)
-                    .border(2.dp, VerdeOscuro, shape)
-                    .padding(horizontal = 12.dp, vertical = 6.dp),
-            )
+            Box(contentAlignment = Alignment.Center) {
+                // Destello de subida de nivel detrás de la insignia
+                EstallidoChispas(
+                    visible = regando,
+                    modifier = Modifier.matchParentSize(),
+                    escala = 3.4f,
+                )
+                Text(
+                    text = "💧 +1 nivel",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = Color.White,
+                    modifier = Modifier
+                        .background(VerdePrincipal, shape)
+                        .border(2.dp, VerdeOscuro, shape)
+                        .padding(horizontal = 12.dp, vertical = 6.dp),
+                )
+            }
         }
     }
 }
