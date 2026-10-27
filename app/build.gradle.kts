@@ -15,20 +15,33 @@ android {
         applicationId = "com.ambientalia"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
+        // En CI sube con cada corrida: el sistema ve siempre una versión mayor.
+        versionCode = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
         versionName = "1.0.0"
 
         vectorDrawables { useSupportLibrary = true }
     }
 
     signingConfigs {
-        val keystoreFile = System.getenv("ANDROID_KEYSTORE_FILE")
-        if (!keystoreFile.isNullOrBlank()) {
+        val keystorePath = System.getenv("ANDROID_KEYSTORE_FILE")
+        val almacen = if (keystorePath.isNullOrBlank()) null else file(keystorePath)
+        if (almacen != null) {
+            val claveAlmacen = System.getenv("KEYSTORE_PASSWORD")
+            val clave = System.getenv("KEY_ALIAS")
+            val claveClave = System.getenv("KEY_PASSWORD")
+
             create("release") {
-                storeFile = file(keystoreFile)
-                storePassword = System.getenv("KEYSTORE_PASSWORD")
-                keyAlias = System.getenv("KEY_ALIAS")
-                keyPassword = System.getenv("KEY_PASSWORD")
+                storeFile = almacen
+                storePassword = claveAlmacen
+                keyAlias = clave
+                keyPassword = claveClave
+            }
+            // La misma key para debug: así cada build de CI actualiza al anterior
+            maybeCreate("debug") {
+                storeFile = almacen
+                storePassword = claveAlmacen
+                keyAlias = clave
+                keyPassword = claveClave
             }
         }
     }
