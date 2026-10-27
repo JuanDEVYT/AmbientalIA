@@ -96,7 +96,6 @@ fun EntradaDuolingo(index: Int, contenido: @Composable () -> Unit) {
                 initialScale = 0.9f,
             ),
         exit = fadeOut(),
-        initiallyVisible = false,
     ) {
         contenido()
     }
