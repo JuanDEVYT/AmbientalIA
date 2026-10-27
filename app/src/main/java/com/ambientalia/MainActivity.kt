@@ -11,6 +11,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
@@ -18,6 +21,7 @@ import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.LocalFlorist
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -34,11 +38,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ambientalia.notify.AlarmaOverlay
 import com.ambientalia.ui.screens.ChatScreen
 import com.ambientalia.ui.screens.IntroScreen
 import com.ambientalia.ui.screens.PlantsScreen
@@ -47,6 +55,7 @@ import com.ambientalia.ui.screens.SettingsScreen
 import com.ambientalia.ui.theme.AmbientalIaTheme
 import com.ambientalia.ui.theme.VerdeFondo
 import com.ambientalia.ui.theme.VerdeHoja
+import com.ambientalia.ui.theme.VerdeTextoSuave
 
 class MainActivity : ComponentActivity() {
 
@@ -58,6 +67,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AlarmaOverlay.cerrar()
         destinoPendiente = intent?.getStringExtra(EXTRA_DESTINO)
         setContent {
             AmbientalIaTheme {
@@ -68,6 +78,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onNewIntent(intent: android.content.Intent) {
         super.onNewIntent(intent)
+        AlarmaOverlay.cerrar()
         destinoPendiente = intent.getStringExtra(EXTRA_DESTINO)
     }
 }
@@ -120,47 +131,63 @@ fun AmbientalRoot(destinoPendiente: String?) {
     Scaffold(
         containerColor = VerdeFondo,
         bottomBar = {
-            NavigationBar(containerColor = VerdeFondo) {
-                val seleccion = DESTINOS.indexOfFirst { it.ruta == nav.currentDestination?.route }
-                DESTINOS.forEachIndexed { i, destino ->
-                    val activa = i == seleccion
-                    val escala by animateFloatAsState(
-                        targetValue = if (activa) 1.2f else 1f,
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                            stiffness = Spring.StiffnessMediumLow,
-                        ),
-                        label = "nav$i",
-                    )
-                    NavigationBarItem(
-                        selected = activa,
-                        onClick = {
-                            nav.navigate(destino.ruta) {
-                                popUpTo(nav.graph.startDestinationId) { saveState = true }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = destino.icono,
-                                contentDescription = destino.etiqueta,
-                                modifier = Modifier.graphicsLayer {
-                                    scaleX = escala
-                                    scaleY = escala
-                                },
-                            )
-                        },
-                        label = {
-                            Text(
-                                text = destino.etiqueta,
-                                fontWeight = if (activa) FontWeight.ExtraBold else FontWeight.SemiBold,
-                            )
-                        },
-                        colors = NavigationBarItemDefaults.colors(
-                            indicatorColor = VerdeHoja,
-                        ),
-                    )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(VerdeFondo),
+            ) {
+                // Créditos siempre visibles encima de la barra de navegación.
+                Text(
+                    text = stringResource(R.string.creditos),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = VerdeTextoSuave,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 6.dp, bottom = 2.dp),
+                )
+                NavigationBar(containerColor = VerdeFondo) {
+                    val seleccion = DESTINOS.indexOfFirst { it.ruta == nav.currentDestination?.route }
+                    DESTINOS.forEachIndexed { i, destino ->
+                        val activa = i == seleccion
+                        val escala by animateFloatAsState(
+                            targetValue = if (activa) 1.2f else 1f,
+                            animationSpec = spring(
+                                dampingRatio = Spring.DampingRatioMediumBouncy,
+                                stiffness = Spring.StiffnessMediumLow,
+                            ),
+                            label = "nav$i",
+                        )
+                        NavigationBarItem(
+                            selected = activa,
+                            onClick = {
+                                nav.navigate(destino.ruta) {
+                                    popUpTo(nav.graph.startDestinationId) { saveState = true }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = destino.icono,
+                                    contentDescription = destino.etiqueta,
+                                    modifier = Modifier.graphicsLayer {
+                                        scaleX = escala
+                                        scaleY = escala
+                                    },
+                                )
+                            },
+                            label = {
+                                Text(
+                                    text = destino.etiqueta,
+                                    fontWeight = if (activa) FontWeight.ExtraBold else FontWeight.SemiBold,
+                                )
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                indicatorColor = VerdeHoja,
+                            ),
+                        )
+                    }
                 }
             }
         },

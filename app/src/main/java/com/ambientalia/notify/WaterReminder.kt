@@ -117,6 +117,15 @@ object WaterReminder {
         }
     }
 
+    /**
+     * Llega como alarma: notificación de alta prioridad + ventana superpuesta
+     * encima de otras apps (si se concedió el permiso de superposición).
+     */
+    fun alarma(context: Context) {
+        notificar(context)
+        AlarmaOverlay.mostrar(context)
+    }
+
     /** Muestra la notificación de riego (la dispara la alarma y el botón de prueba). */
     fun notificar(context: Context) {
         val app = context.applicationContext
@@ -141,6 +150,7 @@ object WaterReminder {
             .setContentText(texto)
             .setStyle(NotificationCompat.BigTextStyle().bigText(texto))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setAutoCancel(true)
             .setContentIntent(pi)
             .build()
@@ -152,7 +162,7 @@ object WaterReminder {
 /** Dispara la notificación y reprograma la del día siguiente. */
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        WaterReminder.notificar(context)
+        WaterReminder.alarma(context)
         WaterReminder.programar(context)
     }
 }

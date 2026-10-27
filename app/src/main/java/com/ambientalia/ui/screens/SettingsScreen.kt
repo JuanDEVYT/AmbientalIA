@@ -1,8 +1,11 @@
 package com.ambientalia.ui.screens
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -86,6 +89,7 @@ fun SettingsScreen() {
     var hora by remember { mutableIntStateOf(Prefs.recordatorioHora) }
     var minuto by remember { mutableIntStateOf(Prefs.recordatorioMinuto) }
     var editandoHora by remember { mutableStateOf(false) }
+    var superposicionOk by remember { mutableStateOf(Settings.canDrawOverlays(context)) }
 
     fun cargarModelos() {
         if (cargandoModelos) return
@@ -106,6 +110,12 @@ fun SettingsScreen() {
     }
 
     LaunchedEffect(Unit) { if (modelos.isEmpty()) cargarModelos() }
+
+    val pedirSuperposicion = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+    ) {
+        superposicionOk = Settings.canDrawOverlays(context)
+    }
 
     Column(
         modifier = Modifier
@@ -247,7 +257,7 @@ fun SettingsScreen() {
                 )
                 ChunkyButton(
                     text = "Probar aviso",
-                    onClick = { WaterReminder.notificar(context) },
+                    onClick = { WaterReminder.alarma(context) },
                     modifier = Modifier.weight(1f),
                     containerColor = Color.White,
                     contentColor = VerdeBosque,
@@ -265,6 +275,29 @@ fun SettingsScreen() {
                 ChunkyButton(
                     text = "Permitir notificaciones",
                     onClick = { permiso.launch(Manifest.permission.POST_NOTIFICATIONS) },
+                    containerColor = Color.White,
+                    contentColor = VerdeBosque,
+                )
+            }
+
+            if (!superposicionOk) {
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = "Para que el recordatorio aparezca encima de otras apps, como una alarma, permite las superposiciones.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = VerdeTextoSuave,
+                )
+                Spacer(Modifier.height(8.dp))
+                ChunkyButton(
+                    text = "Permitir superposición (alarma)",
+                    onClick = {
+                        val uri = Uri.parse("package:${context.packageName}")
+                        runCatching {
+                            pedirSuperposicion.launch(
+                                Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, uri),
+                            )
+                        }
+                    },
                     containerColor = Color.White,
                     contentColor = VerdeBosque,
                 )
