@@ -7,7 +7,6 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
-import android.os.SystemClock
 import android.provider.Settings
 import android.view.Gravity
 import android.view.View
@@ -48,9 +47,19 @@ object AlarmaOverlay {
         val app = contexto.applicationContext
 
         // Pantalla encendida, como una alarma de verdad (requiere WAKE_LOCK).
+        // Se usa un wake lock público con ACQUIRE_CAUSES_WAKEUP porque
+        // PowerManager.wakeUp() no forma parte del SDK público.
         val energia = app.getSystemService(PowerManager::class.java)
         if (energia != null && !energia.isInteractive) {
-            runCatching { energia.wakeUp(SystemClock.elapsedRealtime()) }
+            runCatching {
+                @Suppress("DEPRECATION")
+                val bloqueo = energia.newWakeLock(
+                    PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP,
+                    "ambientalia:alarma",
+                )
+                bloqueo.setReferenceCounted(false)
+                bloqueo.acquire(10_000L)
+            }
         }
 
         hilo.post {
@@ -192,7 +201,8 @@ object AlarmaOverlay {
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED,
                 android.graphics.PixelFormat.TRANSLUCENT,
             ).apply { gravity = Gravity.CENTER }
 
