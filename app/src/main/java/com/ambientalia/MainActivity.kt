@@ -8,13 +8,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CameraAlt
-import androidx.compose.material.icons.filled.Chat
-import androidx.compose.material.icons.filled.LocalFlorist
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -27,8 +24,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -65,13 +64,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private data class Destino(val ruta: String, val etiqueta: String, val icono: ImageVector)
+private data class Destino(val ruta: String, val etiqueta: String, val emoji: String)
 
 private val DESTINOS = listOf(
-    Destino("chat", "Chat", Icons.Filled.Chat),
-    Destino("escanear", "Escanear", Icons.Filled.CameraAlt),
-    Destino("plantas", "Plantas", Icons.Filled.LocalFlorist),
-    Destino("ajustes", "Ajustes", Icons.Filled.Settings),
+    Destino("chat", "Chat", "💬"),
+    Destino("escanear", "Escanear", "📸"),
+    Destino("plantas", "Plantas", "🪴"),
+    Destino("ajustes", "Ajustes", "⚙️"),
 )
 
 @Composable
@@ -109,8 +108,17 @@ fun AmbientalRoot(destinoPendiente: String?) {
             NavigationBar(containerColor = VerdeFondo) {
                 val seleccion = DESTINOS.indexOfFirst { it.ruta == nav.currentDestination?.route }
                 DESTINOS.forEachIndexed { i, destino ->
+                    val activa = i == seleccion
+                    val escala by animateFloatAsState(
+                        targetValue = if (activa) 1.2f else 1f,
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                            stiffness = Spring.StiffnessMediumLow,
+                        ),
+                        label = "nav$i",
+                    )
                     NavigationBarItem(
-                        selected = i == seleccion,
+                        selected = activa,
                         onClick = {
                             nav.navigate(destino.ruta) {
                                 popUpTo(nav.graph.startDestinationId) { saveState = true }
@@ -118,8 +126,22 @@ fun AmbientalRoot(destinoPendiente: String?) {
                                 restoreState = true
                             }
                         },
-                        icon = { Icon(destino.icono, contentDescription = destino.etiqueta) },
-                        label = { Text(destino.etiqueta) },
+                        icon = {
+                            Text(
+                                text = destino.emoji,
+                                fontSize = 24.sp,
+                                modifier = Modifier.graphicsLayer {
+                                    scaleX = escala
+                                    scaleY = escala
+                                },
+                            )
+                        },
+                        label = {
+                            Text(
+                                text = destino.etiqueta,
+                                fontWeight = if (activa) FontWeight.ExtraBold else FontWeight.SemiBold,
+                            )
+                        },
                         colors = NavigationBarItemDefaults.colors(
                             indicatorColor = VerdeHoja,
                         ),

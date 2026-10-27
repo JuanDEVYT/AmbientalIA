@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Planta con flor: orquídea, rosa, lavanda, pensamiento -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- tallo -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M60,68 C56,56 62,46 60,36"
+        android:strokeColor="#43A302"
+        android:strokeLineCap="round"
+        android:strokeWidth="4" />
+
+    <!-- hojas del tallo -->
+    <group android:pivotX="60" android:pivotY="58" android:rotation="-45">
+        <path android:fillColor="#58CC02" android:pathData="M60,46 C67,50 67,58 60,62 C53,58 53,50 60,46 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="58" android:rotation="45">
+        <path android:fillColor="#58CC02" android:pathData="M60,46 C67,50 67,58 60,62 C53,58 53,50 60,46 Z" />
+    </group>
+
+    <!-- flor -->
+    <group android:pivotX="60" android:pivotY="32" android:rotation="0">
+        <path android:fillColor="#FFC800" android:pathData="M60,18 C67,23 67,30 60,35 C53,30 53,23 60,18 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="32" android:rotation="72">
+        <path android:fillColor="#FFC800" android:pathData="M60,18 C67,23 67,30 60,35 C53,30 53,23 60,18 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="32" android:rotation="144">
+        <path android:fillColor="#FFC800" android:pathData="M60,18 C67,23 67,30 60,35 C53,30 53,23 60,18 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="32" android:rotation="216">
+        <path android:fillColor="#FFC800" android:pathData="M60,18 C67,23 67,30 60,35 C53,30 53,23 60,18 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="32" android:rotation="288">
+        <path android:fillColor="#FFC800" android:pathData="M60,18 C67,23 67,30 60,35 C53,30 53,23 60,18 Z" />
+    </group>
+    <path android:fillColor="#D98E5A" android:pathData="M55,32 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0 Z" />
+
+    <!-- maceta -->
+    <path android:fillColor="#D98E5A" android:pathData="M33,68 L87,68 L80,110 Q79,114 75,114 L45,114 Q41,114 40,110 Z" />
+    <path android:fillColor="#C67B47" android:pathData="M27,57 H93 Q95,57 95,59 V66 Q95,68 93,68 H27 Q25,68 25,66 V59 Q25,57 27,57 Z" />
+    <path android:fillColor="#6E4526" android:pathData="M34,63 a26,5 0 1,0 52,0 a26,5 0 1,0 -52,0 Z" />
+</vector>

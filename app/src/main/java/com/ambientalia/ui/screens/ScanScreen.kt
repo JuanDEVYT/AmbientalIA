@@ -32,12 +32,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -67,6 +62,7 @@ import com.ambientalia.data.PlantaUsuario
 import com.ambientalia.ui.components.ChunkyButton
 import com.ambientalia.ui.components.EcoBanner
 import com.ambientalia.ui.components.LeafCard
+import com.ambientalia.ui.components.duolingoPress
 import com.ambientalia.ui.theme.Ambar
 import com.ambientalia.ui.theme.NaranjaAlerta
 import com.ambientalia.ui.theme.RojoRiego
@@ -299,19 +295,12 @@ private fun TarjetaAcciones(
             )
             Spacer(Modifier.height(14.dp))
             ChunkyButton(
-                text = "Abrir cámara",
+                text = "📷 Abrir cámara",
                 onClick = onTomarFoto,
-                icon = {
-                    Icon(
-                        imageVector = Icons.Filled.PhotoCamera,
-                        contentDescription = null,
-                        tint = Color.White,
-                    )
-                },
             )
             Spacer(Modifier.height(12.dp))
             ChunkyButton(
-                text = "Elegir de la galería",
+                text = "🖼️ Elegir de la galería",
                 onClick = onGaleria,
                 containerColor = Color.White,
                 contentColor = VerdeBosque,
@@ -371,15 +360,17 @@ private fun CamaraPreview(onCapturada: (File?) -> Unit, onCerrar: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(factory = { previewView }, modifier = Modifier.fillMaxSize())
 
-        IconButton(
-            onClick = onCerrar,
+        Box(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(8.dp)
+                .size(40.dp)
                 .clip(RoundedCornerShape(50))
-                .background(Color.Black.copy(alpha = 0.35f)),
+                .background(Color.Black.copy(alpha = 0.45f))
+                .duolingoPress(onClick = onCerrar),
+            contentAlignment = Alignment.Center,
         ) {
-            Icon(Icons.Filled.Close, contentDescription = "Cerrar cámara", tint = Color.White)
+            Text("✕", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
         }
 
         // Disparo estilo Duolingo
@@ -403,7 +394,10 @@ private fun CamaraPreview(onCapturada: (File?) -> Unit, onCerrar: () -> Unit) {
                     .size(54.dp)
                     .clip(RoundedCornerShape(50))
                     .background(VerdePrincipal),
-            )
+                contentAlignment = Alignment.Center,
+            ) {
+                Text("📸", fontSize = 24.sp)
+            }
         }
     }
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cactus con brazos -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- brazo izquierdo -->
+    <path android:fillColor="#58CC02" android:pathData="M34,68 C34,50 36,44 41,44 C46,44 48,50 48,68 Z" />
+    <!-- brazo derecho -->
+    <path android:fillColor="#58CC02" android:pathData="M72,68 C72,52 74,46 79,46 C84,46 86,52 86,68 Z" />
+    <!-- cuerpo -->
+    <path android:fillColor="#43A302" android:pathData="M47,68 C47,36 51,25 60,25 C69,25 73,36 73,68 Z" />
+    <!-- costilla -->
+    <path android:fillColor="#86D94B" android:pathData="M58,30 L61,30 L61,64 L58,64 Z" />
+    <path android:fillColor="#86D94B" android:pathData="M66,34 L68,34 L68,64 L66,64 Z" />
+    <!-- flores -->
+    <path android:fillColor="#FFC800" android:pathData="M52,28 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z" />
+    <path android:fillColor="#FFC800" android:pathData="M64,33 a3.5,3.5 0 1,0 7,0 a3.5,3.5 0 1,0 -7,0 Z" />
+
+    <!-- maceta -->
+    <path android:fillColor="#D98E5A" android:pathData="M33,68 L87,68 L80,110 Q79,114 75,114 L45,114 Q41,114 40,110 Z" />
+    <path android:fillColor="#C67B47" android:pathData="M27,57 H93 Q95,57 95,59 V66 Q95,68 93,68 H27 Q25,68 25,66 V59 Q25,57 27,57 Z" />
+    <path android:fillColor="#6E4526" android:pathData="M34,63 a26,5 0 1,0 52,0 a26,5 0 1,0 -52,0 Z" />
+</vector>

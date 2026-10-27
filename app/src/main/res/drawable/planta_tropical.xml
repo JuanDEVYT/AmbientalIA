@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hojas grandes y anchas: monstera, ficus, calatea, palmera -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- hojas -->
+    <group android:pivotX="60" android:pivotY="66" android:rotation="-56">
+        <path android:fillColor="#43A302" android:pathData="M60,16 C75,32 75,54 60,70 C45,54 45,32 60,16 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="66" android:rotation="56">
+        <path android:fillColor="#43A302" android:pathData="M60,16 C75,32 75,54 60,70 C45,54 45,32 60,16 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="66" android:rotation="-30">
+        <path android:fillColor="#86D94B" android:pathData="M60,14 C76,30 76,54 60,70 C44,54 44,30 60,14 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="66" android:rotation="30">
+        <path android:fillColor="#86D94B" android:pathData="M60,14 C76,30 76,54 60,70 C44,54 44,30 60,14 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="66" android:rotation="0">
+        <path android:fillColor="#58CC02" android:pathData="M60,10 C77,28 77,54 60,70 C43,54 43,28 60,10 Z" />
+        <path android:fillColor="#43A302" android:pathData="M59,20 L61,20 L61,64 L59,64 Z" />
+    </group>
+
+    <!-- maceta -->
+    <path android:fillColor="#D98E5A" android:pathData="M33,68 L87,68 L80,110 Q79,114 75,114 L45,114 Q41,114 40,110 Z" />
+    <path android:fillColor="#C67B47" android:pathData="M27,57 H93 Q95,57 95,59 V66 Q95,68 93,68 H27 Q25,68 25,66 V59 Q25,57 27,57 Z" />
+    <path android:fillColor="#6E4526" android:pathData="M34,63 a26,5 0 1,0 52,0 a26,5 0 1,0 -52,0 Z" />
+</vector>

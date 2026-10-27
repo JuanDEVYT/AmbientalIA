@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Brote genérico: fallback cuando no se reconoce la planta -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M60,68 C60,58 60,52 60,44"
+        android:strokeColor="#43A302"
+        android:strokeLineCap="round"
+        android:strokeWidth="4" />
+
+    <group android:pivotX="60" android:pivotY="58" android:rotation="-42">
+        <path android:fillColor="#58CC02" android:pathData="M60,42 C69,47 69,58 60,63 C51,58 51,47 60,42 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="58" android:rotation="42">
+        <path android:fillColor="#58CC02" android:pathData="M60,42 C69,47 69,58 60,63 C51,58 51,47 60,42 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="58" android:rotation="0">
+        <path android:fillColor="#86D94B" android:pathData="M60,34 C70,41 70,56 60,63 C50,56 50,41 60,34 Z" />
+    </group>
+
+    <!-- maceta -->
+    <path android:fillColor="#D98E5A" android:pathData="M33,68 L87,68 L80,110 Q79,114 75,114 L45,114 Q41,114 40,110 Z" />
+    <path android:fillColor="#C67B47" android:pathData="M27,57 H93 Q95,57 95,59 V66 Q95,68 93,68 H27 Q25,68 25,66 V59 Q25,57 27,57 Z" />
+    <path android:fillColor="#6E4526" android:pathData="M34,63 a26,5 0 1,0 52,0 a26,5 0 1,0 -52,0 Z" />
+</vector>

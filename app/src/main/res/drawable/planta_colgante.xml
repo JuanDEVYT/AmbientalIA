@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Planta colgante: poto, hiedra -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- hojas de arriba -->
+    <group android:pivotX="60" android:pivotY="66" android:rotation="-34">
+        <path android:fillColor="#43A302" android:pathData="M60,34 C68,42 68,56 60,68 C52,56 52,42 60,34 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="66" android:rotation="34">
+        <path android:fillColor="#43A302" android:pathData="M60,34 C68,42 68,56 60,68 C52,56 52,42 60,34 Z" />
+    </group>
+    <group android:pivotX="60" android:pivotY="66" android:rotation="0">
+        <path android:fillColor="#58CC02" android:pathData="M60,30 C69,40 69,56 60,68 C51,56 51,40 60,30 Z" />
+    </group>
+
+    <!-- maceta -->
+    <path android:fillColor="#D98E5A" android:pathData="M33,68 L87,68 L80,110 Q79,114 75,114 L45,114 Q41,114 40,110 Z" />
+    <path android:fillColor="#C67B47" android:pathData="M27,57 H93 Q95,57 95,59 V66 Q95,68 93,68 H27 Q25,68 25,66 V59 Q25,57 27,57 Z" />
+    <path android:fillColor="#6E4526" android:pathData="M34,63 a26,5 0 1,0 52,0 a26,5 0 1,0 -52,0 Z" />
+
+    <!-- enredaderas colgando -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M45,68 C37,80 34,94 40,106"
+        android:strokeColor="#43A302"
+        android:strokeLineCap="round"
+        android:strokeWidth="3" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M76,68 C83,78 86,92 81,106"
+        android:strokeColor="#43A302"
+        android:strokeLineCap="round"
+        android:strokeWidth="3" />
+
+    <group android:translateX="38" android:translateY="80" android:rotation="-25">
+        <path android:fillColor="#58CC02" android:pathData="M0,-11 C8,-7 8,4 0,11 C-8,4 -8,-7 0,-11 Z" />
+    </group>
+    <group android:translateX="36" android:translateY="97" android:rotation="-45">
+        <path android:fillColor="#86D94B" android:pathData="M0,-10 C7,-6 7,4 0,10 C-7,4 -7,-6 0,-10 Z" />
+    </group>
+    <group android:translateX="82" android:translateY="82" android:rotation="25">
+        <path android:fillColor="#58CC02" android:pathData="M0,-11 C8,-7 8,4 0,11 C-8,4 -8,-7 0,-11 Z" />
+    </group>
+    <group android:translateX="83" android:translateY="99" android:rotation="45">
+        <path android:fillColor="#86D94B" android:pathData="M0,-10 C7,-6 7,4 0,10 C-7,4 -7,-6 0,-10 Z" />
+    </group>
+</vector>

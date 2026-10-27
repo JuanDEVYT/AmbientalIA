@@ -21,11 +21,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -53,7 +48,9 @@ import com.ambientalia.ai.Prompt
 import com.ambientalia.data.Prefs
 import com.ambientalia.ui.components.ChunkyButton
 import com.ambientalia.ui.components.EcoBanner
+import com.ambientalia.ui.components.EntradaDuolingo
 import com.ambientalia.ui.components.LeafCard
+import com.ambientalia.ui.components.PensandoTexto
 import com.ambientalia.ui.theme.VerdeBorde
 import com.ambientalia.ui.theme.VerdeBosque
 import com.ambientalia.ui.theme.VerdeHoja
@@ -230,18 +227,10 @@ fun ChatScreen(viewModel: ChatViewModel = viewModel()) {
                 item { ChipsSugerencias { viewModel.enviar(it) } }
             }
             items(viewModel.mensajes.size) { i ->
-                Burbuja(viewModel.mensajes[i], onReintentar = { viewModel.reintentar() })
+                EntradaDuolingo(index = i) {
+                    Burbuja(viewModel.mensajes[i], onReintentar = { viewModel.reintentar() })
+                }
             }
-        }
-
-        if (viewModel.enviando) {
-            LinearProgressIndicator(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                color = VerdePrincipal,
-            )
-            Spacer(Modifier.height(8.dp))
         }
 
         CajaDeTexto(
@@ -332,11 +321,7 @@ private fun Burbuja(mensaje: MensajeChat, onReintentar: () -> Unit) {
                     .padding(horizontal = 14.dp, vertical = 10.dp),
             ) {
                 if (mensaje.cargando && mensaje.texto.isBlank()) {
-                    Text(
-                        text = "Escribiendo…",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = textoColor.copy(alpha = 0.75f),
-                    )
+                    PensandoTexto()
                 } else {
                     Text(
                         text = mensaje.texto,
@@ -399,23 +384,16 @@ private fun CajaDeTexto(onSend: (String) -> Unit, bloqueado: Boolean) {
             ),
         )
         ChunkyButton(
-            text = "",
+            text = "Enviar ➤",
             onClick = {
                 if (texto.isNotBlank()) {
                     onSend(texto)
                     texto = ""
                 }
             },
-            modifier = Modifier.size(54.dp),
+            modifier = Modifier.width(118.dp),
             enabled = texto.isNotBlank() && !bloqueado,
             shadowHeight = 4.dp,
-            icon = {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Send,
-                    contentDescription = "Enviar",
-                    tint = if (texto.isNotBlank() && !bloqueado) Color.White else VerdeTextoSuave,
-                )
-            },
         )
     }
 }
