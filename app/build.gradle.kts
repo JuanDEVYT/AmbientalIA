@@ -37,12 +37,11 @@ android {
                 keyPassword = claveClave
             }
             // La misma key para debug: así cada build de CI actualiza al anterior
-            maybeCreate("debug") {
-                storeFile = almacen
-                storePassword = claveAlmacen
-                keyAlias = clave
-                keyPassword = claveClave
-            }
+            val configDebug = findByName("debug") ?: create("debug")
+            configDebug.storeFile = almacen
+            configDebug.storePassword = claveAlmacen
+            configDebug.keyAlias = clave
+            configDebug.keyPassword = claveClave
         }
     }
 
