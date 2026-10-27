@@ -15,20 +15,42 @@ android {
         applicationId = "com.ambientalia"
         minSdk = 26
         targetSdk = 35
-        // En CI sube con cada corrida: el sistema ve siempre una versión mayor.
-        versionCode = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
+        // Un único esquema de versión para CI y local: el número de commits del repo.
+        // Así el APK de Actions y el de Android Studio se actualizan entre sí
+        // (GITHUB_RUN_NUMBER solo existía en CI y dejaba al build local en 1).
+        versionCode = runCatching {
+            val proceso = ProcessBuilder("git", "rev-list", "--count", "HEAD")
+                .directory(rootDir)
+                .redirectErrorStream(true)
+                .start()
+            val texto = proceso.inputStream.bufferedReader().readText().trim()
+            if (proceso.waitFor() == 0) texto.toInt() else 1
+        }.getOrDefault(1)
         versionName = "1.0.0"
 
         vectorDrawables { useSupportLibrary = true }
     }
 
     signingConfigs {
-        val keystorePath = System.getenv("ANDROID_KEYSTORE_FILE")
-        val almacen = if (keystorePath.isNullOrBlank()) null else file(keystorePath)
+        // Misma key para todos los builds:
+        //  · en CI llega por variables de entorno (secretos del repo)
+        //  · en local se lee keystore/keystore.env (gitignorado)
+        val local = java.util.Properties().apply {
+            val archivo = rootProject.file("keystore/keystore.env")
+            if (archivo.exists()) archivo.inputStream().use { load(it) }
+        }
+        fun param(nombre: String): String? =
+            System.getenv(nombre)?.takeIf { it.isNotBlank() }
+                ?: local.getProperty(nombre)?.trim()?.takeIf { it.isNotBlank() }
+
+        val keystorePath = param("ANDROID_KEYSTORE_FILE")
+        val almacen = (if (keystorePath.isNullOrBlank()) null else file(keystorePath))
+            ?.takeIf { it.exists() }
+            ?: rootProject.file("keystore/ambientalia.jks").takeIf { it.exists() }
         if (almacen != null) {
-            val claveAlmacen = System.getenv("KEYSTORE_PASSWORD")
-            val clave = System.getenv("KEY_ALIAS")
-            val claveClave = System.getenv("KEY_PASSWORD")
+            val claveAlmacen = param("KEYSTORE_PASSWORD")
+            val clave = param("KEY_ALIAS")
+            val claveClave = param("KEY_PASSWORD")
 
             create("release") {
                 storeFile = almacen
@@ -58,6 +80,8 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
+            // Misma key que release: así cada build (CI o Android Studio) actualiza al anterior.
+            signingConfig = signingConfigs.findByName("debug")
         }
     }
 

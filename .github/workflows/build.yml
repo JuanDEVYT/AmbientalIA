@@ -16,6 +16,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Historia completa: versionCode = número de commits (ver app/build.gradle.kts).
+          fetch-depth: 0
 
       - name: JDK 17
         uses: actions/setup-java@v4
