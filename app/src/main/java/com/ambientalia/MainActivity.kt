@@ -28,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -39,6 +40,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ambientalia.ui.screens.ChatScreen
+import com.ambientalia.ui.screens.IntroScreen
 import com.ambientalia.ui.screens.PlantsScreen
 import com.ambientalia.ui.screens.ScanScreen
 import com.ambientalia.ui.screens.SettingsScreen
@@ -81,6 +83,13 @@ private val DESTINOS = listOf(
 
 @Composable
 fun AmbientalRoot(destinoPendiente: String?) {
+    // Intro de bienvenida (regadera): se muestra una sola vez al arrancar.
+    var introVisible by rememberSaveable { mutableStateOf(true) }
+    if (introVisible) {
+        IntroScreen(onTerminado = { introVisible = false })
+        return
+    }
+
     val nav = rememberNavController()
     var inicioElegido by remember { mutableStateOf(false) }
 

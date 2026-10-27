@@ -52,6 +52,42 @@ La key se guarda cifrada con `EncryptedSharedPreferences` (Keystore del disposit
 
 ---
 
+## 🎨 Animaciones de plantas
+
+Set de animaciones nativas (Jetpack Compose + `Canvas`, **sin dependencias nuevas
+ni imágenes**: puro vector, nítido a cualquier DPI) en
+`ui/components/WateringAnimations.kt`:
+
+| Composable | Qué hace | Dónde encaja |
+|---|---|---|
+| `RiegoAnimado(visible)` | Lluvia de gotas con salpicaduras | Sobre la tarjeta al tocar **Regar 💧** |
+| `Modifier.rebotarAlRegar(regando)` | Rebote elástico de la planta | En el icono de la planta |
+| `EstallidoChispas(visible)` | Destellos ámbar que irradian | Insignia "+1 nivel", rachas, logros |
+| `GotaCargando()` | Gota que se aplasta y estira | Loader del escáner / burbuja del chat |
+| `HojaGirando()` | Hoja girando en círculo | Spinner de carga larga |
+
+El color del agua es el token `Agua` de `ui/theme/Color.kt`. Uso básico:
+
+```kotlin
+Box {
+    LeafCard { … }
+    RiegoAnimado(visible = regando, Modifier.matchParentSize())
+}
+```
+
+Ya está cableado en `PlantsScreen.TarjetaPlanta`: al regar, la tarjeta se llena
+de gotas, la planta rebota y estallan chispas ámbar junto a "+1 nivel".
+
+### Intro de bienvenida
+
+`res/raw/intro_riego.webm` (~124 KB, 1080×1080, 3,5 s): la regadera riega una
+planta que crece y florece con chispas ámbar. Se genera con Remotion y se
+reproduce con `IntroScreen` al arrancar la app (`MainActivity.AmbientalRoot`);
+si el video no puede reproducirse en el dispositivo, la app sigue directa al
+menú sin quedarse pegada.
+
+---
+
 ## Compilar (GitHub Actions)
 
 La app **no se compila en local**: el workflow [build.yml](.github/workflows/build.yml)
